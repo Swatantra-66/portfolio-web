@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -19,7 +18,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			adminSecret = "AR1SEE"
 		}
 
-		providedSecret := strings.TrimSpace(c.GetHeader("X-Admin-Secret"))
+		providedSecret := c.GetHeader("X-Admin-Secret")
 
 		log.Printf("DEBUG: Server Expects: '%s'", adminSecret)
 		log.Printf("DEBUG: Client Sent:    '%s'", providedSecret)
