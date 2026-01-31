@@ -42,14 +42,21 @@ func main() {
 
 	router := gin.Default()
 
+	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
+
+	if allowedOrigin == "" {
+		allowedOrigin = "*"
+	}
+
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{
 		"http://localhost:5173",
 		"http://localhost:3000",
-		os.Getenv("FRONTEND_URL"),
+		allowedOrigin,
 	}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "X-Admin-Secret"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+
 	router.Use(cors.New(config))
 
 	router.GET("/health", func(c *gin.Context) {
