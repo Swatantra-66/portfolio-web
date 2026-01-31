@@ -63,6 +63,10 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"status": "healthy"})
 	})
 
+	router.HEAD("/health", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
+
 	api := router.Group("/api")
 	{
 		api.GET("/projects", getProjects)
