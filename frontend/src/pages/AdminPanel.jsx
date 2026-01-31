@@ -11,6 +11,9 @@ import {
   ArrowLeft,
   Lock,
   LogOut,
+  Link as LinkIcon,
+  Github,
+  Image as ImageIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -21,12 +24,10 @@ import {
 } from "../utils/api";
 
 const AdminPanel = () => {
-  // --- Auth & Toast State ---
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [toast, setToast] = useState(null);
 
-  // --- Projects State ---
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,7 +43,6 @@ const AdminPanel = () => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  // Helper to trigger notifications
   const showToast = (message, type = "success") => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
@@ -65,7 +65,6 @@ const AdminPanel = () => {
       setProjects(data);
       setError(null);
     } catch (err) {
-      console.error("Error fetching projects:", err);
       setError("Failed to load projects");
     } finally {
       setLoading(false);
@@ -75,7 +74,6 @@ const AdminPanel = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     const cleanPassword = passwordInput.trim();
-
     if (cleanPassword === "AR1SEE") {
       localStorage.setItem("admin_token", cleanPassword);
       setIsAuthenticated(true);
@@ -126,12 +124,11 @@ const AdminPanel = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const projectData = { ...formData };
       if (editingProject) {
-        await updateProject(editingProject.id, projectData);
+        await updateProject(editingProject.id, formData);
         showToast("Project updated successfully!");
       } else {
-        await createProject(projectData);
+        await createProject(formData);
         showToast("New project created!");
       }
       await fetchProjects();
@@ -154,7 +151,6 @@ const AdminPanel = () => {
     }
   };
 
-  // --- Render Login Screen ---
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
@@ -167,34 +163,24 @@ const AdminPanel = () => {
             <Lock className="w-8 h-8 text-primary-400" />
           </div>
           <h2 className="text-2xl font-bold font-display mb-2">Admin Access</h2>
-          <p className="text-[var(--text-secondary)] mb-6">
-            Enter security key
-          </p>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
               placeholder="Enter Password"
-              className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 focus:border-primary-500 outline-none transition-colors text-center"
+              className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 text-center"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
               autoFocus
             />
             <button type="submit" className="btn-primary w-full py-3">
-              Unlock
+              Unlock Dashboard
             </button>
           </form>
-          <Link
-            to="/"
-            className="inline-block mt-6 text-sm text-[var(--text-secondary)] hover:text-white"
-          >
-            ← Back to Portfolio
-          </Link>
         </motion.div>
       </div>
     );
   }
 
-  // --- Render Dashboard ---
   return (
     <div className="min-h-screen pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -202,29 +188,27 @@ const AdminPanel = () => {
           <div>
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-primary-400 hover:text-primary-300 mb-4"
+              className="inline-flex items-center gap-2 text-primary-400 mb-4"
             >
               <ArrowLeft className="w-4 h-4" /> Back to Portfolio
             </Link>
-            <h1 className="text-4xl md:text-5xl font-display font-bold">
+            <h1 className="text-4xl font-display font-bold">
               Admin <span className="gradient-text">Dashboard</span>
             </h1>
           </div>
           <div className="flex gap-3">
             <button
               onClick={handleLogout}
-              className="p-3 rounded-lg glass-effect hover:bg-red-500/10 text-red-400 transition-colors"
+              className="p-3 rounded-lg glass-effect text-red-400"
             >
               <LogOut className="w-5 h-5" />
             </button>
-            <motion.button
+            <button
               onClick={() => handleOpenModal()}
               className="btn-primary flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               <Plus className="w-5 h-5" /> New Project
-            </motion.button>
+            </button>
           </div>
         </div>
 
@@ -232,64 +216,49 @@ const AdminPanel = () => {
           <div className="flex justify-center items-center py-20">
             <Loader2 className="w-12 h-12 text-primary-400 animate-spin" />
           </div>
-        ) : error ? (
-          <div className="glass-effect rounded-2xl p-8 text-center">
-            <p className="text-red-400 mb-4">{error}</p>
-            <button onClick={fetchProjects} className="btn-primary">
-              Retry
-            </button>
-          </div>
         ) : (
           <div className="space-y-4">
             {projects.map((project) => (
-              <motion.div
+              <div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="glass-effect rounded-2xl p-6 hover:bg-white/10 transition-colors"
+                className="glass-effect rounded-2xl p-6 flex items-start justify-between gap-4"
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-display font-bold mb-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-[var(--text-secondary)] mb-3 text-sm">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech_stack?.split(",").map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs"
-                        >
-                          {tech.trim()}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleOpenModal(project)}
-                      className="p-2 rounded-lg glass-effect hover:bg-primary-500/20"
-                    >
-                      <Edit2 className="w-5 h-5 text-primary-400" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(project.id)}
-                      className="p-2 rounded-lg glass-effect hover:bg-red-500/20"
-                    >
-                      <Trash2 className="w-5 h-5 text-red-400" />
-                    </button>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <p className="text-[var(--text-secondary)] mb-3 text-sm">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech_stack?.split(",").map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs"
+                      >
+                        {tech.trim()}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </motion.div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleOpenModal(project)}
+                    className="p-2 rounded-lg glass-effect text-primary-400"
+                  >
+                    <Edit2 className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(project.id)}
+                    className="p-2 rounded-lg glass-effect text-red-400"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Modals & Notifications */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -307,47 +276,110 @@ const AdminPanel = () => {
               className="glass-effect rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-display font-bold">
-                  {editingProject ? "Edit Project" : "Create New Project"}
+                <h2 className="text-2xl font-bold">
+                  {editingProject ? "Edit Project" : "New Project"}
                 </h2>
                 <button
                   onClick={handleCloseModal}
-                  className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  className="p-2 hover:bg-white/10 rounded-lg"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <input
-                  type="text"
-                  required
-                  value={formData.title}
-                  onChange={(e) =>
-                    setFormData({ ...formData, title: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10"
-                  placeholder="Title"
-                />
-                <textarea
-                  required
-                  rows={4}
-                  value={formData.description}
-                  onChange={(e) =>
-                    setFormData({ ...formData, description: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 resize-none"
-                  placeholder="Description"
-                />
-                <input
-                  type="text"
-                  required
-                  value={formData.tech_stack}
-                  onChange={(e) =>
-                    setFormData({ ...formData, tech_stack: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10"
-                  placeholder="Tech Stack (comma separated)"
-                />
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Project Title
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Description
+                  </label>
+                  <textarea
+                    required
+                    rows={3}
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 resize-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Tech Stack (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.tech_stack}
+                    onChange={(e) =>
+                      setFormData({ ...formData, tech_stack: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10"
+                    placeholder="React, Go, PostgreSQL"
+                  />
+                </div>
+
+                {/* --- RESTORED URL FIELDS --- */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center gap-2 text-sm font-medium mb-1">
+                      <ImageIcon className="w-4 h-4" /> Image URL
+                    </label>
+                    <input
+                      type="url"
+                      value={formData.image_url}
+                      onChange={(e) =>
+                        setFormData({ ...formData, image_url: e.target.value })
+                      }
+                      className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 text-sm"
+                      placeholder="https://..."
+                    />
+                  </div>
+                  <div>
+                    <label className="flex items-center gap-2 text-sm font-medium mb-1">
+                      <Github className="w-4 h-4" /> GitHub Link
+                    </label>
+                    <input
+                      type="url"
+                      value={formData.github_link}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          github_link: e.target.value,
+                        })
+                      }
+                      className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 text-sm"
+                      placeholder="https://github.com/..."
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-medium mb-1">
+                    <LinkIcon className="w-4 h-4" /> Live Site URL
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.demo_link}
+                    onChange={(e) =>
+                      setFormData({ ...formData, demo_link: e.target.value })
+                    }
+                    className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 text-sm"
+                    placeholder="https://..."
+                  />
+                </div>
+
                 <div className="flex gap-3 pt-4">
                   <button
                     type="submit"
@@ -359,7 +391,7 @@ const AdminPanel = () => {
                     ) : (
                       <>
                         <Save className="w-5 h-5" />{" "}
-                        {editingProject ? "Update" : "Create"}
+                        {editingProject ? "Update Project" : "Create Project"}
                       </>
                     )}
                   </button>
