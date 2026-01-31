@@ -64,10 +64,13 @@ const AdminPanel = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (passwordInput === "AR1SEE") {
-      localStorage.setItem("admin_token", "AR1SEE");
+    const cleanPassword = passwordInput.trim();
+
+    if (cleanPassword === "AR1SEE") {
+      localStorage.setItem("admin_token", cleanPassword);
       setIsAuthenticated(true);
       fetchProjects();
+      window.location.reload();
     } else {
       alert("Incorrect Password!");
     }
