@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Edit2, Trash2, Save, X, Loader2, ArrowLeft } from "lucide-react";
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  Save,
+  X,
+  Loader2,
+  ArrowLeft,
+  Lock,
+  LogOut,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   getProjects,
@@ -10,6 +20,9 @@ import {
 } from "../utils/api";
 
 const AdminPanel = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,7 +39,13 @@ const AdminPanel = () => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    fetchProjects();
+    const token = localStorage.getItem("admin_token");
+    if (token) {
+      setIsAuthenticated(true);
+      fetchProjects(); // Only fetch if logged in
+    } else {
+      setLoading(false); // Stop loading if no token
+    }
   }, []);
 
   const fetchProjects = async () => {
@@ -41,6 +60,23 @@ const AdminPanel = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (passwordInput === "AR1SEE") {
+      localStorage.setItem("admin_token", "AR1SEE");
+      setIsAuthenticated(true);
+      fetchProjects();
+    } else {
+      alert("Incorrect Password!");
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin_token");
+    setIsAuthenticated(false);
+    setPasswordInput("");
   };
 
   const handleOpenModal = (project = null) => {
@@ -101,7 +137,7 @@ const AdminPanel = () => {
       handleCloseModal();
     } catch (err) {
       console.error("Error saving project:", err);
-      alert("Failed to save project. Please check your admin secret.");
+      alert("Failed to save project. check console.");
     } finally {
       setSubmitting(false);
     }
@@ -115,9 +151,50 @@ const AdminPanel = () => {
       await fetchProjects();
     } catch (err) {
       console.error("Error deleting project:", err);
-      alert("Failed to delete project. Please check your admin secret.");
+      alert("Failed to delete project.");
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="glass-effect p-8 rounded-2xl w-full max-w-md text-center"
+        >
+          <div className="w-16 h-16 bg-primary-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Lock className="w-8 h-8 text-primary-400" />
+          </div>
+          <h2 className="text-2xl font-bold font-display mb-2">Admin Access</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Enter your security key to continue
+          </p>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <input
+              type="password"
+              placeholder="Enter Password"
+              className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 focus:border-primary-500 outline-none transition-colors text-center"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              autoFocus
+            />
+            <button type="submit" className="btn-primary w-full py-3">
+              Unlock Dashboard
+            </button>
+          </form>
+
+          <Link
+            to="/"
+            className="inline-block mt-6 text-sm text-[var(--text-secondary)] hover:text-white"
+          >
+            ← Back to Portfolio
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-24 pb-12">
@@ -138,15 +215,25 @@ const AdminPanel = () => {
               Manage your portfolio projects
             </p>
           </div>
-          <motion.button
-            onClick={() => handleOpenModal()}
-            className="btn-primary flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Plus className="w-5 h-5" />
-            New Project
-          </motion.button>
+
+          <div className="flex gap-3">
+            <button
+              onClick={handleLogout}
+              className="p-3 rounded-lg glass-effect hover:bg-red-500/10 text-red-400 transition-colors"
+              title="Logout"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+            <motion.button
+              onClick={() => handleOpenModal()}
+              className="btn-primary flex items-center gap-2"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Plus className="w-5 h-5" />
+              New Project
+            </motion.button>
+          </div>
         </div>
 
         {loading ? (

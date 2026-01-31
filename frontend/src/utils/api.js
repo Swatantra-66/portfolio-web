@@ -4,7 +4,7 @@ const API_URL = window.location.hostname === "localhost"
   ? "http://localhost:8080/api"
   : "https://portfolio-web-0ull.onrender.com/api";
 
-const ADMIN_SECRET = 'AR1SEE';
+const ADMIN_SECRET = localStorage.getItem("admin_token");
 
 const api = axios.create({
   baseURL: API_URL,
