@@ -62,20 +62,18 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p
-            className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-8 leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-[var(--text-secondary)] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
           >
-            Backend Developer engineering robust server-side architecture, APIs
-            and database solutions{" "}
-            <span className="text-primary-400 font-semibold">
-              Go(Gin + Gorilla Mux)
-            </span>
-            , <span className="text-primary-400 font-semibold">PostgreSQL</span>
-            ,<span className="text-primary-400 font-semibold">Docker</span>,
-            <span className="text-primary-400 font-semibold">AWS</span>, and{" "}
-            <span className="text-primary-400 font-semibold">Modern Tech</span>
+            Backend Developer engineering robust server-side architecture, APIs,
+            and database solutions using{" "}
+            <span className="text-primary-400 font-semibold">Go (Gin)</span>,{" "}
+            <span className="text-primary-400 font-semibold">TypeScript</span>,{" "}
+            <span className="text-primary-400 font-semibold">PostgreSQL</span>,{" "}
+            <span className="text-primary-400 font-semibold">Docker</span>, and{" "}
+            <span className="text-primary-400 font-semibold">AWS</span>.
           </motion.p>
 
           <motion.div
