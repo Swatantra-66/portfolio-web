@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { FileText, Github, Linkedin, Mail, ArrowDown } from "lucide-react";
 
 const Hero = () => {
   const scrollToProjects = () => {
@@ -107,6 +107,11 @@ const Hero = () => {
             transition={{ delay: 0.9, duration: 0.8 }}
           >
             {[
+              {
+                Icon: FileText,
+                href: "/MyResume.pdf",
+                label: "Resume",
+              },
               {
                 Icon: Github,
                 href: "https://github.com/Swatantra-66",
