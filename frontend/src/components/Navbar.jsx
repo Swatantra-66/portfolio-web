@@ -7,6 +7,7 @@ const navLinks = [
   { name: "Home", path: "/", hash: "#" },
   { name: "Skills", path: "/", hash: "#skills" },
   { name: "Projects", path: "/", hash: "#projects" },
+  { name: "Certifications", path: "/", hash: "#certifications" },
   { name: "Contact", path: "/", hash: "#contact" },
 ];
 
@@ -44,18 +45,22 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
           <Link
             to="/"
             onClick={() => handleNavClick("#")}
             className="relative z-10"
           >
             <motion.div
-              className="text-2xl font-display font-bold"
+              className="text-2xl font-display font-bold flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="gradient-text">Swatantra</span>
+              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-mono text-lg">
+                &gt;_
+              </div>
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Swatantra
+              </span>
             </motion.div>
           </Link>
 
