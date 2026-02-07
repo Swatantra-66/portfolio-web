@@ -5,25 +5,25 @@ const skillsData = [
   {
     category: "Backend",
     icon: Code2,
-    skills: ["Go (Gin)", "Node.js", "Gorilla Mux", "REST APIs", "C++"],
+    skills: ["Go (Gin)", "Gorilla Mux", "REST APIs", "Node.js", "C++"],
     color: "from-green-500 to-emerald-500",
   },
   {
     category: "Database",
     icon: Database,
-    skills: ["PostgreSQL", "MongoDB", "Redis", "SQL", "Database Design"],
+    skills: ["PostgreSQL", "MySQL", "S3", "DynamoDB", "Database Design"],
     color: "from-purple-500 to-pink-500",
   },
   {
     category: "DevOps & Tools",
     icon: Wrench,
-    skills: ["Docker", "Git", "CI/CD", "AWS"],
+    skills: ["Git", "Github", "AWS", "Docker", "Linux"],
     color: "from-orange-500 to-red-500",
   },
   {
-    category: "Frontend",
+    category: "Languages",
     icon: Code2,
-    skills: ["React", "TypeScript", "Tailwind CSS", "Vite"],
+    skills: ["Go", "TypeScript", "C++", "JavaScript", "Solidity"],
     color: "from-blue-500 to-cyan-500",
   },
 ];
