@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import logoImg from "../assets/portfolio-logo.png";
 
 const navLinks = [
   { name: "Home", path: "/", hash: "#" },
@@ -51,12 +52,18 @@ const Navbar = () => {
             className="relative z-10"
           >
             <motion.div
-              className="text-2xl font-display font-bold flex items-center gap-2"
+              className="text-2xl font-display font-bold flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-mono text-lg">
-                &gt;_
+              <div className="h-10 w-10 relative flex items-center justify-center">
+                <div className="absolute inset-0 bg-blue-500 blur-md opacity-20 rounded-full"></div>
+
+                <img
+                  src={logoImg}
+                  alt="Swatantra Logo"
+                  className="w-full h-full object-contain relative z-10"
+                />
               </div>
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 Swatantra

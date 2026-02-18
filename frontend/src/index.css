@@ -164,3 +164,9 @@
 *:focus-visible {
   @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-[var(--bg-primary)];
 }
+
+.whitespace-pre-wrap ul,
+.whitespace-pre-wrap li {
+  margin-bottom: 8px;
+  display: block;
+}
