@@ -49,7 +49,7 @@ func main() {
 
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{
-		"https://swatantra-portfolio.vercel.app",
+		"https://swatantra-portfolio.vercel.app/",
 		"http://localhost:5173",
 		"http://localhost:3000",
 	}
