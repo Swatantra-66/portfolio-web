@@ -170,6 +170,7 @@ const AdminPanel = () => {
               className="w-full px-4 py-3 rounded-lg glass-effect border border-white/10 text-center"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
+              autoComplete="new-password"
               autoFocus
             />
             <button type="submit" className="btn-primary w-full py-3">
@@ -331,7 +332,6 @@ const AdminPanel = () => {
                   />
                 </div>
 
-                {/* --- RESTORED URL FIELDS --- */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="flex items-center gap-2 text-sm font-medium mb-1">
