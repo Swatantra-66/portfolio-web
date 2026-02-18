@@ -108,6 +108,7 @@ func chatHandler(c *gin.Context) {
 	ctx := context.Background()
 	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
 	if err != nil {
+		log.Printf("CRITICAL: AI Client failed: %v", err)
 		c.SSEvent("error", "Failed to connect to AI")
 		return
 	}
