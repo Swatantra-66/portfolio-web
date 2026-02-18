@@ -29,6 +29,14 @@ type Skill struct {
 	Proficiency int    `json:"proficiency"`
 }
 
+type ChatRequest struct {
+	Message string `json:"message"`
+}
+
+type ChatResponse struct {
+	Reply string `json:"reply"`
+}
+
 var db *sql.DB
 
 func InitDB() error {
