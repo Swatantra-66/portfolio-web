@@ -31,11 +31,14 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, { role: "bot", text: "" }]);
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
-      });
+      const response = await fetch(
+        "https://portfolio-web-0ull.onrender.com/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: input }),
+        },
+      );
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
