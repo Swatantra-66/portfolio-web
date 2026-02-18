@@ -100,7 +100,6 @@ const Contact = () => {
           })}
         </div>
 
-        {/* Location & Availability */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,9 +109,7 @@ const Contact = () => {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <MapPin className="w-5 h-5 text-primary-400" />
-            <span className="text-[var(--text-secondary)]">
-              Based in Ayodhya, INDIA
-            </span>
+            <span className="text-[var(--text-secondary)]">Ayodhya, INDIA</span>
           </div>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20">
