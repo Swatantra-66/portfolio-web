@@ -49,13 +49,14 @@ func main() {
 
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{
-		"https://swatantra-portfolio.vercel.app/",
+		"https://swatantra-portfolio.vercel.app",
 		"http://localhost:5173",
 		"http://localhost:3000",
 	}
-	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "X-Admin-Secret"}
+	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "X-Admin-Secret", "Authorization"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowCredentials = true
+	config.OptionsResponseStatusCode = 200
 
 	router.Use(cors.New(config))
 
