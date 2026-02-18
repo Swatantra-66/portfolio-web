@@ -47,20 +47,15 @@ func main() {
 
 	router := gin.Default()
 
-	allowedOrigin := os.Getenv("ALLOWED_ORIGIN")
-
-	if allowedOrigin == "" {
-		allowedOrigin = "*"
-	}
-
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{
+		"https://swatantra-portfolio.vercel.app",
 		"http://localhost:5173",
 		"http://localhost:3000",
-		allowedOrigin,
 	}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "X-Admin-Secret"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	config.AllowCredentials = true
 
 	router.Use(cors.New(config))
 
@@ -103,7 +98,6 @@ func chatHandler(c *gin.Context) {
 	c.Writer.Header().Set("Content-Type", "text/event-stream")
 	c.Writer.Header().Set("Cache-Control", "no-cache")
 	c.Writer.Header().Set("Connection", "keep-alive")
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 
 	var req ChatRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
