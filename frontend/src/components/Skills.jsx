@@ -1,28 +1,31 @@
 import { motion } from "framer-motion";
-import { Code2, Database, Cloud, Wrench } from "lucide-react";
+import logoBackend from "../assets/backend.png";
+import logoDatabase from "../assets/database.png";
+import logoTools from "../assets/tools.png";
+import logoLanguage from "../assets/languages.png";
 
 const skillsData = [
   {
     category: "Backend",
-    icon: Code2,
+    icon: logoBackend,
     skills: ["Go (Gin)", "Gorilla Mux", "REST APIs", "Node.js", "C++"],
     color: "from-green-500 to-emerald-500",
   },
   {
     category: "Database",
-    icon: Database,
+    icon: logoDatabase,
     skills: ["PostgreSQL", "MySQL", "S3", "DynamoDB", "Database Design"],
     color: "from-purple-500 to-pink-500",
   },
   {
     category: "DevOps & Tools",
-    icon: Wrench,
+    icon: logoTools,
     skills: ["Git", "Github", "AWS", "Docker", "Linux"],
     color: "from-orange-500 to-red-500",
   },
   {
     category: "Languages",
-    icon: Code2,
+    icon: logoLanguage,
     skills: ["Go", "TypeScript", "C++", "JavaScript", "Solidity"],
     color: "from-blue-500 to-cyan-500",
   },
@@ -48,7 +51,6 @@ const Skills = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {skillsData.map((category, categoryIndex) => {
-          const IconComponent = category.icon;
           return (
             <motion.div
               key={category.category}
@@ -65,9 +67,13 @@ const Skills = () => {
 
               <div className="relative z-10">
                 <div
-                  className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${category.color} mb-4`}
+                  className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${category.color} mb-4 shadow-lg`}
                 >
-                  <IconComponent className="w-6 h-6 text-white" />
+                  <img
+                    src={category.icon}
+                    alt={`${category.category} icon`}
+                    className="w-7 h-7 object-contain drop-shadow-sm"
+                  />
                 </div>
 
                 <h3 className="text-xl font-display font-bold mb-4">
