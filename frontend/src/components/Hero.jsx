@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FileText, Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import waveImg from "../assets/hi.png";
 
 const Hero = () => {
   const scrollToProjects = () => {
@@ -47,8 +48,15 @@ const Hero = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-6"
           >
-            <span className="inline-block px-4 py-2 rounded-full glass-effect text-primary-400 text-sm font-medium mb-6">
-              👋 Welcome to my portfolio
+            {/* ⚡ 1. Increased padding (px-5 py-3) and text size (text-base) */}
+            <span className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-effect text-primary-400 text-base font-medium mb-6">
+              {/* ⚡ 2. Increased image size from w-5 to w-8 */}
+              <img
+                src={waveImg}
+                alt="Greeting"
+                className="w-8 h-8 object-contain origin-bottom-right hover:animate-wave"
+              />
+              Welcome to my portfolio
             </span>
           </motion.div>
 
