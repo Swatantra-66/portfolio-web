@@ -4,6 +4,7 @@ import Skills from "../components/Skills";
 import Projects from "../components/Projects";
 import Contact from "../components/Contact";
 import Certifications from "../components/Certifications";
+import Education from "../components/Education";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Skills />
       <Projects />
       <Certifications />
+      <Education />
       <Contact />
     </motion.div>
   );
