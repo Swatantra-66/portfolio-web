@@ -29,9 +29,7 @@ const Footer = () => {
             transition={{ delay: 0.2 }}
             className="flex items-center gap-2 text-[var(--text-secondary)] text-sm"
           >
-            <span>Built with</span>
-            <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />
-            <span>using Go & React</span>
+            <span>swatantra.exe</span>
           </motion.div>
 
           <motion.div
