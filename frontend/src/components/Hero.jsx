@@ -48,9 +48,7 @@ const Hero = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="mb-6"
           >
-            {/* ⚡ 1. Increased padding (px-5 py-3) and text size (text-base) */}
             <span className="inline-flex items-center gap-3 px-5 py-3 rounded-full glass-effect text-primary-400 text-base font-medium mb-6">
-              {/* ⚡ 2. Increased image size from w-5 to w-8 */}
               <img
                 src={waveImg}
                 alt="Greeting"
