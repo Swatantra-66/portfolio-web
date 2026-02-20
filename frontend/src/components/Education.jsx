@@ -1,143 +1,78 @@
-import { motion } from "framer-motion";
-import collegeLogo from "../assets/college-logo.png";
-import clubLogo from "../assets/club-logo.png";
 import { ExternalLink } from "lucide-react";
+import logoCollege from "../assets/college-logo.png";
+import logoClub from "../assets/club-logo.png";
 
-const experienceData = [
+const certifications = [
   {
-    id: 1,
-    institution: "Innogeeks",
+    title: "Innogeeks",
+    timeline: "2024-2025",
     role: "Technical Member",
-    date: "2024 - 2025",
-    logo: clubLogo,
-    link: "https://innogeeks.in",
+    badgeUrl: logoClub,
+    verifyLink: "https://innogeeks.in",
+    color: "border-blue-500",
   },
-];
-
-const educationData = [
   {
-    id: 1,
-    institution: "KIET Group of Institutions",
-    role: "Bachelor of Technology",
-    date: "2024 - 2028",
-    logo: collegeLogo,
-    link: "https://www.kiet.edu/",
+    title: "KIET Group of Institutions",
+    timeline: "2024-2028",
+    role: "Bachelor Student",
+    badgeUrl: logoCollege,
+    verifyLink: "https://kiet.edu",
+    color: "border-blue-500",
   },
 ];
 
-const Education = () => {
+const Certifications = () => {
   return (
-    <section className="section-container" id="education">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16"
-      >
-        <h2 className="text-5xl md:text-6xl font-display font-bold mb-4">
-          Experience & <span className="gradient-text">Education</span>
+    <section id="certifications" className="py-20 px-4 max-w-5xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-100 mb-3">
+          Education &{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+            Experience
+          </span>
         </h2>
-        <p className="text-xl text-[var(--text-secondary)] max-w-2xl mx-auto">
-          My academic background and community involvement
+        <p className="text-gray-400 max-w-2xl mx-auto">
+          My academic background and community involvement.
         </p>
-      </motion.div>
+      </div>
 
-      <div className="max-w-3xl mx-auto space-y-12">
-        <div>
-          <h3 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-3">
-            Work Experience
-          </h3>
-          <div className="space-y-4">
-            {experienceData.map((item, index) => (
-              <motion.a
-                key={item.id}
-                href={item.link}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {certifications.map((cert, index) => (
+          <div
+            key={index}
+            className={`bg-gray-900/50 p-6 rounded-xl border ${cert.color} border-opacity-30 hover:border-opacity-100 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 flex items-center gap-6`}
+          >
+            <div className="w-16 h-16 flex-shrink-0 bg-gray-800 rounded-lg p-2 flex items-center justify-center overflow-hidden">
+              {" "}
+              <img
+                src={cert.badgeUrl}
+                alt={cert.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-gray-100 leading-tight mb-1">
+                {cert.title}
+              </h3>
+              <p className="text-sm text-gray-400 mb-3">
+                {cert.role} • {cert.timeline}
+              </p>
+
+              <a
+                href={cert.verifyLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glass-effect p-5 md:p-6 rounded-2xl border border-white/10 hover:border-primary-500/50 hover:bg-white/5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 group cursor-pointer relative overflow-hidden"
+                className="inline-flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
               >
-                <div className="flex items-center gap-5 z-10">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center p-1.5 shrink-0 border border-white/20 shadow-lg overflow-hidden">
-                    <img
-                      src={item.logo}
-                      alt={`${item.institution} logo`}
-                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xl font-display font-bold text-white tracking-wide group-hover:text-primary-100 transition-colors">
-                      {item.institution}
-                    </span>
-                    <span className="text-sm font-medium bg-gradient-to-r from-primary-400 to-cyan-400 bg-clip-text text-transparent mt-1">
-                      {item.role}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 z-10">
-                  <span className="text-[var(--text-secondary)] text-sm font-medium">
-                    {item.date}
-                  </span>
-                  <ExternalLink className="w-4 h-4 text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </div>
-              </motion.a>
-            ))}
+                Website <ExternalLink size={14} />
+              </a>
+            </div>
           </div>
-        </div>
-
-        <div>
-          <h3 className="text-2xl font-display font-bold text-white mb-6 flex items-center gap-3">
-            Education
-          </h3>
-          <div className="space-y-4">
-            {educationData.map((item, index) => (
-              <motion.a
-                key={item.id}
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glass-effect p-5 md:p-6 rounded-2xl border border-white/10 hover:border-primary-500/50 hover:bg-white/5 transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 group cursor-pointer relative overflow-hidden"
-              >
-                <div className="flex items-center gap-5 z-10">
-                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center p-1.5 shrink-0 border border-white/20 shadow-lg overflow-hidden">
-                    <img
-                      src={item.logo}
-                      alt={`${item.institution} logo`}
-                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xl font-display font-bold text-white tracking-wide group-hover:text-primary-100 transition-colors">
-                      {item.institution}
-                    </span>
-                    <span className="text-sm font-medium bg-gradient-to-r from-primary-400 to-cyan-400 bg-clip-text text-transparent mt-1">
-                      {item.role}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 z-10">
-                  <span className="text-[var(--text-secondary)] text-sm font-medium">
-                    {item.date}
-                  </span>
-                  <ExternalLink className="w-4 h-4 text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
 };
 
-export default Education;
+export default Certifications;
